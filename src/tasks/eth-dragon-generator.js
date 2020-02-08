@@ -66,4 +66,7 @@ async function dragonGenerator() {
   }));
 }
 
-module.exports = dragonGenerator;
+setInterval(() => {
+  log.info('Run schedule!');
+  dragonGenerator();
+}, 60000);

@@ -66,4 +66,7 @@ async function eggGenerator() {
   }));
 }
 
-module.exports = eggGenerator;
+setInterval(() => {
+  log.info('Run schedule!');
+  eggGenerator();
+}, 60000);

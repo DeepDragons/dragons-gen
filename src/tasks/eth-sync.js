@@ -64,4 +64,7 @@ async function synchronization() {
   }
 };
 
-module.exports = synchronization;
+setInterval(() => {
+  log.info('Run schedule!');
+  synchronization();
+}, 10000);
