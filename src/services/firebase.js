@@ -1,5 +1,4 @@
 const firebase = require('firebase-admin');
-const Rx = require('rxjs');
 
 const conifg = require('../config/firebase');
 
@@ -57,6 +56,28 @@ function setDragon(dragon, key = 'dragoneth') {
   });
 }
 
+/**
+ * Will respond the last dragon data.
+ * @param limit dragons in response.
+ * @param key database key.
+ * @example
+ * getLastDragon().then(/ do somthing /);
+ */
+function getLastDragon(limit = 1, key = 'dragoneth') {
+  const dragonRef = db.collection(key);
+
+  let lastDragon = dragonRef
+    .orderBy('id', 'desc')
+    .limit(limit);
+
+  return lastDragon
+    .get()
+    .then((res) => res.docs.map(
+      (doc) => doc.data())
+    );
+}
+
 module.exports = {
-  setDragon
+  setDragon,
+  getLastDragon
 };
