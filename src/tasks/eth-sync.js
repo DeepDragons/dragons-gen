@@ -1,12 +1,14 @@
 const bunyan = require('bunyan');
 
+const config = require('../config/firebase');
+
 const totalDragons = require('../eth/total-dragons');
 const getDragons = require('../eth/dragons');
 
 const { addDragons, getLastDragon } = require('../services/firebase');
 
 const log = bunyan.createLogger({ name: 'eth-sync' });
-const firebaseKEY = 'dragoneth';
+const firebaseKEY = config.key;
 
 async function synchronization() {
   const amountForSet = 30;

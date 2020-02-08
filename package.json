@@ -1,11 +1,12 @@
 {
   "name": "dragons-gen",
   "version": "1.0.0",
-  "description": "",
+  "description": "Egg and dragon generator for dragoneth game.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sync:eth": "node src/tasks/eth-sync.js | ./node_modules/.bin/bunyan"
+    "sync:eth": "node src/tasks/eth-sync.js | ./node_modules/.bin/bunyan",
+    "egg:eth": "node src/tasks/eth-egg-generator.js | ./node_modules/.bin/bunyan"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,8 @@
     "bunyan": "^1.8.12",
     "custom-env": "^1.0.2",
     "firebase-admin": "^8.9.2",
-    "rxjs": "^6.5.4",
-    "web3": "^1.2.6"
+    "web3": "^1.2.6",
+    "cloudinary": "^1.19.0",
+    "gm": "^1.23.1"
   }
 }
