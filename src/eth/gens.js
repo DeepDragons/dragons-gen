@@ -20,7 +20,7 @@ async function getGensById(id) {
 
   return {
     genColor: genColor,
-    batleGen: batleGen,
+    battleGen: batleGen,
     stage: Number(data.stage),
     currentAction: Number(data.currentAction),
     nextBlock2Action: Number(data.nextBlock2Action),
