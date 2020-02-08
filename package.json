@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/lich666dead/dragons-gen#readme",
   "dependencies": {
-    "firebase-admin": "^8.9.2"
+    "custom-env": "^1.0.2",
+    "firebase-admin": "^8.9.2",
+    "web3": "^1.2.6"
   }
 }

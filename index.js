@@ -1,26 +1,31 @@
-var firebase = require("firebase-admin");
+require('custom-env').env();
+const firebase = require('firebase-admin');
 
-var serviceAccount = require("./serviceAccountKey.json");
+// TODO(DEVELOPER): Change the two placeholders below.
+// [START initialize]
+// Initialize the app with a service account, granting admin privileges
+const serviceAccount = require('./serviceAccountKey.json');
+
+const PROJECT_ID = process.env.PROJECT_ID;
+const SECRET_DOCUMENT = process.env.SECRET_DOCUMENT;
 
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
-  databaseURL: "https://test-23cfc.firebaseio.com"
+  databaseURL: `https://${PROJECT_ID}.firebaseio.com`
 });
+// [END initialize]
 
-var db = firebase.database();
-var ref = db.ref("restricted_access/secret_document");
-ref.once("value", function(snapshot) {
-  console.log(snapshot.val());
-});
+const db = firebase.database();
+const ref = db.ref('node-client');
 
-var usersRef = ref.child("users");
-usersRef.set({
-  alanisawesome: {
-    date_of_birth: "June 23, 1912",
-    full_name: "Alan Turing"
-  },
-  gracehop: {
-    date_of_birth: "December 9, 1906",
-    full_name: "Grace Hopper"
-  }
+// ref.child('unit').on('child_added', (snap) => {
+//   console.log(snap.val());
+// });
+const unitRef = ref.child('unit');
+
+unitRef.push({
+  gen0: 'test1',
+  gen1: 'test2',
+  generated: true,
+  id: 10
 });
