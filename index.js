@@ -7,7 +7,6 @@ const firebase = require('firebase-admin');
 const serviceAccount = require('./serviceAccountKey.json');
 
 const PROJECT_ID = process.env.PROJECT_ID;
-const SECRET_DOCUMENT = process.env.SECRET_DOCUMENT;
 
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
