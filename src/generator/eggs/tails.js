@@ -1,9 +1,9 @@
-var gm = require('gm');
-var colorScheme = require('../genes/main');
-var config = require('../config/config.json');
-var exec = require('child_process').exec;
+const gm = require('gm');
+const colorScheme = require('../genes/main');
+const config = require('../config');
+const exec = require('child_process').exec;
 
-var writeFragment = (MaskFragment, DetailFragment, finite, srcShadow) => {
+const writeFragment = (MaskFragment, DetailFragment, finite, srcShadow) => {
     return new Promise(resolve => {
         gm(MaskFragment)
         .composite(DetailFragment)
@@ -21,13 +21,13 @@ var writeFragment = (MaskFragment, DetailFragment, finite, srcShadow) => {
     });
 };
 
-var tails = (obj, id, scheme) => {
-    let mask = `${config.rootdir.eggs}/${obj.type}/${obj.gen_number}mask.png`;
-    let detail = `${config.rootdir.eggs}/${obj.type}/${obj.gen_number}detail.png`;
-    let MaskFragment = `${config.rootdir.out}/eggs/${obj.type}_mask_${id}.png`;
-    let DetailFragment = `${config.rootdir.out}/eggs/${obj.type}_detail_${id}.png`;
-    let srcShadow = `${config.rootdir.eggs}/${obj.type}/${obj.gen_number}shadow.png`;
-    let finite =  `${config.rootdir.out}/eggs/${obj.type}_${id}.png`;
+const tails = (obj, id, scheme) => {
+    let mask = `${config.eggs}/${obj.type}/${obj.gen_number}mask.png`;
+    let detail = `${config.eggs}/${obj.type}/${obj.gen_number}detail.png`;
+    let MaskFragment = `${config.out}/eggs/${obj.type}_mask_${id}.png`;
+    let DetailFragment = `${config.out}/eggs/${obj.type}_detail_${id}.png`;
+    let srcShadow = `${config.eggs}/${obj.type}/${obj.gen_number}shadow.png`;
+    let finite =  `${config.out}/eggs/${obj.type}_${id}.png`;
 
     let colors0 = colorScheme.getColorFromSchema(scheme, obj.gen_color);
     let colors1 = colorScheme.getColorFromSchema(scheme, obj.chunk_color);

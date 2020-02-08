@@ -1,16 +1,16 @@
-var gm = require('gm');
-var colorScheme = require('../genes/main');
-var config = require('../config/config.json');
-var exec = require('child_process').exec;
+const gm = require('gm');
+const colorScheme = require('../genes/main');
+const config = require('../config');
+const exec = require('child_process').exec;
 
-var fragmentLR = (obj, id, scheme) => {
-    let srcL = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}mask_l.png`;
-    let srcR = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}mask_r.png`;
-    let fragment = `${config.rootdir.out}/dragons/${obj.type}_${id}`;
+const fragmentLR = (obj, id, scheme) => {
+    let srcL = `${config.dragons}/${obj.type}/${obj.gen_number}mask_l.png`;
+    let srcR = `${config.dragons}/${obj.type}/${obj.gen_number}mask_r.png`;
+    let fragment = `${config.out}/dragons/${obj.type}_${id}`;
     let colors0 = colorScheme.getColorFromSchema(scheme, obj.gen_color);
     let colors1 = colorScheme.getColorFromSchema(scheme, obj.chunk_color);
-    let srcDetailL = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}detail_l.png`;
-    let srcDetailR = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}detail_r.png`;
+    let srcDetailL = `${config.dragons}/${obj.type}/${obj.gen_number}detail_l.png`;
+    let srcDetailR = `${config.dragons}/${obj.type}/${obj.gen_number}detail_r.png`;
     
     let asynData = {
         mask_l: false, mask_r: false,
@@ -110,7 +110,7 @@ var fragmentLR = (obj, id, scheme) => {
     });
 };
 
-var fragmentLRCom = (src, srcSL, srcRL, id, fragment) => {
+const fragmentLRCom = (src, srcSL, srcRL, id, fragment) => {
 
     let asynData = { l: false, r: false };
     
@@ -152,27 +152,27 @@ var fragmentLRCom = (src, srcSL, srcRL, id, fragment) => {
     });
 };
 
-var removeFragment = (src) => {
+const removeFragment = (src) => {
     exec(`rm -f ${src.mask_l} ${src.detail_l} ${src.mask_r} ${src.detail_r}`);
 };
 
-var paws = (obj, id, scheme) => {
+const paws = (obj, id, scheme) => {
 
     // TODO: non ditail. //
     if (obj.gen_number > 0) obj.gen_number = 0;
 
-    let fragment = `${config.rootdir.out}/dragons/${obj.type}_${id}`;
+    let fragment = `${config.out}/dragons/${obj.type}_${id}`;
 
-    let srcShadowL = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}shadow_l.png`;
-    let srcShadowR = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}shadow_r.png`;
+    let srcShadowL = `${config.dragons}/${obj.type}/${obj.gen_number}shadow_l.png`;
+    let srcShadowR = `${config.dragons}/${obj.type}/${obj.gen_number}shadow_r.png`;
     let src = {};
 
     return fragmentLR(obj, id, scheme).then(data => {
         src = {
-            mask_l: `${config.rootdir.out}/dragons/${data.out[0]}.png`,
-            detail_l: `${config.rootdir.out}/dragons/${data.out[3]}.png`,
-            mask_r: `${config.rootdir.out}/dragons/${data.out[1]}.png`,
-            detail_r: `${config.rootdir.out}/dragons/${data.out[2]}.png`
+            mask_l: `${config.out}/dragons/${data.out[0]}.png`,
+            detail_l: `${config.out}/dragons/${data.out[3]}.png`,
+            mask_r: `${config.out}/dragons/${data.out[1]}.png`,
+            detail_r: `${config.out}/dragons/${data.out[2]}.png`
         };
 
         return fragmentLRCom(src, srcShadowL, srcShadowR, id, fragment);

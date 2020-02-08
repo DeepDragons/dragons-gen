@@ -1,10 +1,5 @@
-var GenEggs = require('./eggs/main');
-var GenDragon = require('./dragons/main');
-var config = require('./config/config.json');
-
-config.rootdir.eggs = __dirname + config.rootdir.eggs;
-config.rootdir.dragons = __dirname + config.rootdir.dragons;
-config.rootdir.out = __dirname + config.rootdir.out;
+const GenEggs = require('./eggs/main');
+const GenDragon = require('./dragons/main');
 
 module.exports = {
   GenEggs,

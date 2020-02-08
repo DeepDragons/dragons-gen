@@ -1,9 +1,9 @@
-var gm = require('gm');
-var colorScheme = require('../genes/main');
-var config = require('../config/config.json');
-var exec = require('child_process').exec;
+const gm = require('gm');
+const colorScheme = require('../genes/main');
+const config = require('../config');
+const exec = require('child_process').exec;
 
-var writeFragment = (MaskFragment, DetailFragment, finite, srcShadow) => {
+const writeFragment = (MaskFragment, DetailFragment, finite, srcShadow) => {
     return new Promise(resolve => {
         gm(MaskFragment)
         .composite(DetailFragment)
@@ -21,15 +21,15 @@ var writeFragment = (MaskFragment, DetailFragment, finite, srcShadow) => {
     });
 };
 
-var wings = (obj, id, scheme) => {
+const wings = (obj, id, scheme) => {
     if (obj.gen_number > 4) obj.gen_number = 4;
 
-    let mask = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}mask.png`;
-    let detail = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}detail.png`;
-    let MaskFragment = `${config.rootdir.out}/dragons/${obj.type}_mask_${id}.png`;
-    let DetailFragment = `${config.rootdir.out}/dragons/${obj.type}_detail_${id}.png`;
-    let srcShadow = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}shadow.png`;
-    let finite =  `${config.rootdir.out}/dragons/${obj.type}_${id}.png`;
+    let mask = `${config.dragons}/${obj.type}/${obj.gen_number}mask.png`;
+    let detail = `${config.dragons}/${obj.type}/${obj.gen_number}detail.png`;
+    let MaskFragment = `${config.out}/dragons/${obj.type}_mask_${id}.png`;
+    let DetailFragment = `${config.out}/dragons/${obj.type}_detail_${id}.png`;
+    let srcShadow = `${config.dragons}/${obj.type}/${obj.gen_number}shadow.png`;
+    let finite =  `${config.out}/dragons/${obj.type}_${id}.png`;
 
     let colors0 = colorScheme.getColorFromSchema(scheme, obj.gen_color);
     let colors1 = colorScheme.getColorFromSchema(scheme, obj.chunk_color);

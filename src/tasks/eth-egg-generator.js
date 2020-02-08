@@ -13,11 +13,17 @@ async function eggGenerator() {
 
   const needGenerate = await getNonGenerated(firebaseKEY);
 
-  needGenerate.map((dragon) => {
+  const needToGenerate = await Promise.all(needGenerate.map(async (dragon) => {
     const egg = new GenEggs(dragon.genColor, dragon.id);
+    const result = await egg.onGenerateFragments();
 
-    return egg.onGenerateFragments();
-  });
+    return {
+      ...result,
+      ...dragon
+    };
+  }));
+
+  console.log(needToGenerate);
 }
 
 eggGenerator();

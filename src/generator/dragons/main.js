@@ -1,4 +1,4 @@
-const config = require('../config/config.json');
+const config = require('../config');
 
 const exec   = require('child_process').exec;
 const bunyan = require('bunyan');
@@ -239,7 +239,7 @@ class GenDragon {
 
   onRemoveFragments(names) {
     let sdtStr = 'rm -f ';
-    let dir = `${config.rootdir.out}/dragons`
+    let dir = `${config.out}/dragons`
     
     try {
       names.forEach(el => {

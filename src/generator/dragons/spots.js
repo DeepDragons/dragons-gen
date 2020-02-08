@@ -1,13 +1,12 @@
-var gm = require('gm');
-var colorScheme = require('../genes/main');
-var config = require('../config/config.json');
+const gm = require('gm');
+const colorScheme = require('../genes/main');
+const config = require('../config');
 
-
-var spots = (obj, id, scheme) => {
+const spots = (obj, id, scheme) => {
     return Promise.reject('Spots was desabled');
 
-    let src = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}mask.png`;
-    let fragment = `${config.rootdir.out}/dragons/${obj.type}_${id}.png`;
+    let src = `${config.dragons}/${obj.type}/${obj.gen_number}mask.png`;
+    let fragment = `${config.out}/dragons/${obj.type}_${id}.png`;
 
     let colors = colorScheme.getColorFromSchema(scheme, obj.gen_color);
 

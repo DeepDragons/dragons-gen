@@ -11,7 +11,7 @@ const wings  = require('./wings');
 const egg    = require('./egg');
 
 const colorScheme = require('../genes/main');
-const config      = require('../../config/generator');
+const config      = require('../config');
 
 const log = bunyan.createLogger({ name: 'eggs-generator' });
 
@@ -37,7 +37,7 @@ class GenEggs {
     Object.keys(this.data).forEach(item => {
       names.push(this.data[item]);
     });
-            
+
     return egg.genBufer(names[0], names[k]).then(data => {
       k++;
       bufer = data.out;
@@ -70,6 +70,10 @@ class GenEggs {
       return egg.writeBufer(bufer, this.id);
     }).catch((err) => {
       log.error('fail to generete', err);
+    }).then(() => {
+      this.onDeleteFragments(names);
+
+      return { status: 'done' };
     });
   }
 
@@ -97,89 +101,88 @@ class GenEggs {
     if (colorFailSpots) {
       this.scheme.spots.gen_number = 0;
     }
-    
-    aura(this.scheme.aura, this.id, this.scheme.color_scheme).then(data => {
-      log.info('Egg fragment aura-generated');
-      k++;
-      this.data[orderAura] = data.out;
-      if (k >= 7) this.onGenerateAnEgg();
-    }).catch(err => {
-      log.error('aura-skip', err);
-      if (err) k++;
-    });
-    bodies(this.scheme.bodies, this.id, this.scheme.color_scheme).then(data => {
-      log.info('Egg fragment bodies-generated');
-      k++;
-      this.data[orderBodies] = data.out;
-      if (k >= 7) this.onGenerateAnEgg();
-    }).catch(err => {
-      log.error('bodies-skip', err);
-      this.done = null;
-      if (err) k++;
-    });
-    horns(this.scheme.horns, this.id, this.scheme.color_scheme).then(data => {
-      log.info('Egg fragment horns-generated');
-      k++;
-      this.data[orderHorns] = data.out;
-      if (k >= 7) this.onGenerateAnEgg();
-    }).catch(err => {
-      log.error('horns-skip', err);
-      if (err) k++;
-    });
-    scales(this.scheme.scales, this.id, this.scheme.color_scheme).then(data => {
-      log.info('Egg fragment scales-generated');
-      k++;
-      this.data[orderScales] = data.out;
-      if (k >= 7) this.onGenerateAnEgg();
-    }).catch(err => {
-      log.error('scales-skip', err);
-      if (err) k++;
-    });
-    spots(this.scheme.spots, this.id, this.scheme.color_scheme).then(data => {
-      log.info('Egg fragment spots-generated');
-      k++;
-      this.data[orderSpots] = data.out;
-      if (k >= 7) this.onGenerateAnEgg();
-    }).catch(err => {
-      log.error('spots-skip', err);
-      if (err) k++;
-    });
-    wings(this.scheme.wings, this.id, this.scheme.color_scheme).then(data => {
-      log.info('Egg fragment wings-generated');
-      k++;
-      this.data[orderWings] = data.out;
-      if (k >= 7) this.onGenerateAnEgg();
-    }).catch(err => {
-      log.error('wings-skip', err);
-      if (err) k++;
-    });
-    tails(this.scheme.tails, this.id, this.scheme.color_scheme).then(data => {
-      log.info('Egg fragment tails-generated');
-      k++;
-      this.data[orderTails] = data.out;
-      if (k >= 7) this.onGenerateAnEgg();
-    }).catch(err => {
-      log.error('tails-skip', err);
-      if (err) k++;
-    });
 
-    log.info(`eggID: ${this.id}, all fragments has been generated.`);
-
-    return new Promise((resolve, reject) => {
-      let interval = setInterval(() => {
-        if (this.done === true) {
-          clearInterval(interval);
-          log.info(`eggID: ${this.id}, has been generated`);
-          return resolve({ status: 'done' });
+    return Promise.all([
+      aura(this.scheme.aura, this.id, this.scheme.color_scheme).then(data => {
+        log.info('Egg fragment aura-generated');
+        k++;
+        this.data[orderAura] = data.out;
+        if (k >= 7) {
+          return this.onGenerateAnEgg();
         }
-
-        if (this.done === null) {
-          clearInterval(interval);
-          log.error(`eggID: ${this.id}, has't generate, data: ${this.data}`);
-          return reject({ status: 'err', data: this.data });
+      }).catch(err => {
+        log.warn('aura-skip', err);
+        if (err) k++;
+      }),
+      bodies(this.scheme.bodies, this.id, this.scheme.color_scheme).then(data => {
+        log.info('Egg fragment bodies-generated');
+        k++;
+        this.data[orderBodies] = data.out;
+        if (k >= 7) {
+          return this.onGenerateAnEgg();
         }
-      }, 300);
-    });
+      }).catch(err => {
+        log.warn('bodies-skip', err);
+        this.done = null;
+        if (err) k++;
+      }),
+      horns(this.scheme.horns, this.id, this.scheme.color_scheme).then(data => {
+        log.info('Egg fragment horns-generated');
+        k++;
+        this.data[orderHorns] = data.out;
+        if (k >= 7) {
+          return this.onGenerateAnEgg();
+        }
+      }).catch(err => {
+        log.warn('horns-skip', err);
+        if (err) k++;
+      }),
+      scales(this.scheme.scales, this.id, this.scheme.color_scheme).then(data => {
+        log.info('Egg fragment scales-generated');
+        k++;
+        this.data[orderScales] = data.out;
+        if (k >= 7) {
+          return this.onGenerateAnEgg();
+        }
+      }).catch(err => {
+        log.warn('scales-skip', err);
+        if (err) k++;
+      }),
+      spots(this.scheme.spots, this.id, this.scheme.color_scheme).then(data => {
+        log.info('Egg fragment spots-generated');
+        k++;
+        this.data[orderSpots] = data.out;
+        if (k >= 7) {
+          return this.onGenerateAnEgg();
+        }
+      }).catch(err => {
+        log.warn('spots-skip', err);
+        if (err) k++;
+      }),
+      wings(this.scheme.wings, this.id, this.scheme.color_scheme).then(data => {
+        log.info('Egg fragment wings-generated');
+        k++;
+        this.data[orderWings] = data.out;
+        if (k >= 7) {
+          return this.onGenerateAnEgg();
+        }
+      }).catch(err => {
+        log.warn('wings-skip', err);
+        if (err) k++;
+      }),
+      tails(this.scheme.tails, this.id, this.scheme.color_scheme).then(data => {
+        log.info('Egg fragment tails-generated');
+        k++;
+        this.data[orderTails] = data.out;
+        if (k >= 7) {
+          return this.onGenerateAnEgg();
+        }
+      }).catch(err => {
+        log.warn('tails-skip', err);
+        if (err) k++;
+      })
+    ])
+    .then((el) => el.filter(Boolean)[0]);
   }
 
   onDeleteFragments(names) {
@@ -188,7 +191,9 @@ class GenEggs {
        * @returns {void};
        */
       names.map(item => {
-        exec(`rm -f ${config.dataDir}/eggs/${item}.png`)
+        const file = `rm -f ${config.out}/eggs/${item}.png`;
+        log.warn('exec', file);
+        exec(file)
       });
   }
 

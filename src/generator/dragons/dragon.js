@@ -1,13 +1,13 @@
-var gm = require('gm');
-var config = require('../config/config.json');
+const gm = require('gm');
+const config = require('../config');
 
 
-var dragon = (back, front) => {
-    let srcFront = `${config.rootdir.out}/dragons/${front}.png`;
+const dragon = (back, front) => {
+    let srcFront = `${config.out}/dragons/${front}.png`;
     let buferOrStr;
 
     if (typeof back === 'string') {
-        buferOrStr = `${config.rootdir.out}/dragons/${back}.png`;
+        buferOrStr = `${config.out}/dragons/${back}.png`;
     } else {
         buferOrStr = back;
     }
@@ -26,8 +26,8 @@ var dragon = (back, front) => {
     });
 };
 
-var write = (buffer, id) => {
-    let src = `${config.rootdir.out}/dragons/${id}.png`;
+const write = (buffer, id) => {
+    let src = `${config.out}/dragons/${id}.png`;
 
     return new Promise((resolve, reject) => {
         gm(buffer)

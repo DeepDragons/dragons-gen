@@ -1,14 +1,13 @@
-var gm = require('gm');
-var colorScheme = require('../genes/main');
-var config = require('../config/config.json');
+const gm = require('gm');
+const colorScheme = require('../genes/main');
+const config = require('../config');
 
-
-var horns = (obj, id, scheme) => {
-    let srcL = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}mask_l.png`;
-    let srcR = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}mask_r.png`;
-    let fragment = `${config.rootdir.out}/dragons/${obj.type}_${id}`;
-    let srcShadowL = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}shadow_l.png`;
-    let srcShadowR = `${config.rootdir.dragons}/${obj.type}/${obj.gen_number}shadow_r.png`;
+const horns = (obj, id, scheme) => {
+    let srcL = `${config.dragons}/${obj.type}/${obj.gen_number}mask_l.png`;
+    let srcR = `${config.dragons}/${obj.type}/${obj.gen_number}mask_r.png`;
+    let fragment = `${config.out}/dragons/${obj.type}_${id}`;
+    let srcShadowL = `${config.dragons}/${obj.type}/${obj.gen_number}shadow_l.png`;
+    let srcShadowR = `${config.dragons}/${obj.type}/${obj.gen_number}shadow_r.png`;
 
     let colors = colorScheme.getColorFromSchema(scheme, obj.gen_color);
 

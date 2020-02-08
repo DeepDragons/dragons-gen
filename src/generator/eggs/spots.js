@@ -1,12 +1,11 @@
-var gm = require('gm');
-var colorScheme = require('../genes/main');
-var config = require('../config/config.json');
+const gm = require('gm');
+const colorScheme = require('../genes/main');
+const config = require('../config');
 
-
-var spots = (obj, id, scheme) => {
-    let src = `${config.rootdir.eggs}/${obj.type}/${obj.gen_number}mask.png`;
-    let fragment = `${config.rootdir.out}/eggs/${obj.type}_${id}.png`;
-    let srcShadow = `${config.rootdir.eggs}/bodies/0shadow.png`;
+const spots = (obj, id, scheme) => {
+    let src = `${config.eggs}/${obj.type}/${obj.gen_number}mask.png`;
+    let fragment = `${config.out}/eggs/${obj.type}_${id}.png`;
+    let srcShadow = `${config.eggs}/bodies/0shadow.png`;
 
     let colors = colorScheme.getColorFromSchema(scheme, obj.gen_color);
 
