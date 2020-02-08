@@ -119,11 +119,11 @@ function getNonGenerated(key, type, limit = 1) {
   return query;
 }
 
-function generatedUpdate(dragons, key, type) {
+function generatedUpdate(dragons, key, type, value = true) {
   const collections = dragons.map((dragon) => {
     const data = firebaseDataParse(dragon);
 
-    data[type] = true;
+    data[type] = value;
 
     return db
       .collection(key)

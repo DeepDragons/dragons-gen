@@ -118,6 +118,9 @@ const fragmentLRCom = (src, srcSL, srcRL, id, fragment) => {
         gm(src.mask_l)
         .composite(src.detail_l)
         .toBuffer((err, buffer) => {
+            if (err) {
+                return reject(err);
+            }
             gm(buffer)
             .composite(srcSL)
             .write(fragment + '_l.png', (err) => {
@@ -135,6 +138,9 @@ const fragmentLRCom = (src, srcSL, srcRL, id, fragment) => {
         gm(src.mask_r)
         .composite(src.detail_r)
         .toBuffer((err, buffer) => {
+            if (err) {
+                return reject(err);
+            }
             gm(buffer)
             .composite(srcRL)
             .write(fragment + '_r.png', (err) => {

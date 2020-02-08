@@ -17,6 +17,9 @@ const scales = (obj, id, scheme) => {
         gm(src)
         .colorize(colors.r, colors.g, colors.b)
         .toBuffer((err, buffer) => {
+            if (err) {
+                return reject(err);
+            }
             gm(buffer)
             .composite(srcShadow)
             .write(fragment, (err) => {

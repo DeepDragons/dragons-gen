@@ -85,20 +85,13 @@ class GenDragon {
       k++;
       bufer = data.out;
       return dragon.genBufer(data.out, names[k]);
-    }).then(() => {
-      return dragon.writeBufer(bufer, this.id);
+    }).catch(err => {
+        // return dragon.writeBufer(bufer, this.id);
     }).then(() => {
       this.onRemoveFragments(names);
-
-      return { status: 'done' };
+      return dragon.writeBufer(bufer, this.id);
     }).catch(err => {
-      log.error(
-        'fail dragonID:', this.id,
-        'dragons gens:', this.gens,
-        'error:', err
-      );
-
-      return { status: 'fail', message: err.message };
+      return { status: 'fail', message: err.message }
     });
   }
 

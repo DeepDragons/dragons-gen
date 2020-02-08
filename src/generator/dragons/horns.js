@@ -17,6 +17,9 @@ const horns = (obj, id, scheme) => {
         gm(srcL)
         .colorize(colors.r, colors.g, colors.b)
         .toBuffer((err, buffer) => {
+            if (err) {
+                return reject(err);
+            }
             gm(buffer)
             .composite(srcShadowL)
             .write(fragment + '_l.png', (err) => {

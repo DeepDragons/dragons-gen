@@ -8,6 +8,9 @@ const writeFragment = (MaskFragment, DetailFragment, finite, srcShadow) => {
         gm(MaskFragment)
         .composite(DetailFragment)
         .toBuffer((err, buffer) => {
+            if (err) {
+                return reject(err);
+            }
             gm(buffer)
             .composite(srcShadow)
             .write(finite, (err) => {
