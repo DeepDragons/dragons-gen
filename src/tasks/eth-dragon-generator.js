@@ -3,12 +3,13 @@ const bunyan = require('bunyan');
 const config = require('../config/firebase');
 
 const { GenDragon } = require('../generator');
+const cloudinaryUpload = require('../services/cloudinary');
 const { getNonGenerated, generatedUpdate } = require('../services/firebase');
 
 const log = bunyan.createLogger({ name: 'eth-dragon-generator' });
 const firebaseKEY = config.key;
 const dragonType = 'dragon';
-const limit = 10;
+const limit = 1;
 
 async function dragonGenerator() {
   log.info('run dragon generator.');
@@ -43,6 +44,19 @@ async function dragonGenerator() {
       );
 
       log.error('wrong generate dragon status:', result);
+    } else {
+      try {
+        await cloudinaryUpload(dragon.id, dragonType);
+        log.info('dragonID:', dragon.id, 'has been uploaded');
+      } catch (err) {
+        log.error('cloudinary fail upload img', err);
+        await generatedUpdate(
+          [dragon],
+          firebaseKEY,
+          dragonType,
+          false
+        );
+      }
     }
 
     return {
@@ -52,4 +66,4 @@ async function dragonGenerator() {
   }));
 }
 
-dragonGenerator();
+module.exports = dragonGenerator;

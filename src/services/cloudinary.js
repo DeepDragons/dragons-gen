@@ -1,19 +1,13 @@
 const cloudinary = require('cloudinary');
 
 const config = require('../config/cloudinary');
+const generatorConfig = require('../generator/config');
 
 cloudinary.config(config);
 
 function upload(id, stage) {
-  let type = '';
-
-  if (stage == 'egg') {
-    type = 'eggs';
-  } else if (stage == 'dragon') {
-    type = 'dragons';
-  }
-
-  let name = `${config.rootdir.out}/${type}/${id}.png`;
+  let type = stage + 's';
+  let name = `${generatorConfig.out}/${type}/${id}.png`;
 
   let params = {
     public_id: `${stage}_${id}`, 

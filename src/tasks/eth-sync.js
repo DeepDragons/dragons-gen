@@ -64,4 +64,4 @@ async function synchronization() {
   }
 };
 
-synchronization();
+module.exports = synchronization;
