@@ -10,7 +10,7 @@ const firebaseKEY = config.key;
 const dragonType = 'dragon';
 const limit = 1;
 
-async function eggGenerator() {
+async function dragonGenerator() {
   log.info('run dragon generator.');
 
   const needGenerate = await getNonGenerated(
@@ -19,25 +19,37 @@ async function eggGenerator() {
     limit
   );
 
-  const needToGenerate = await Promise.all(needGenerate.map(async (dragon) => {
+  await generatedUpdate(
+    needGenerate,
+    firebaseKEY,
+    dragonType,
+    true
+  );
+
+  return await Promise.all(needGenerate.map(async (dragon) => {
     log.info('try generate eggID:', dragon.id);
     
-    const egg = new GenDragon(dragon.genColor, dragon.id);
-    const result = await egg.onGenerateFragments();
+    const instance = new GenDragon(dragon.genColor, dragon.id);
+    const result = await instance.onGenerateFragments();
 
     log.info('eggID:', dragon.id, 'has been generated.');
+
+    if (result.status !== 'done') {
+      await generatedUpdate(
+        [dragon],
+        firebaseKEY,
+        dragonType,
+        false
+      );
+
+      log.error('wrong generate dragon status:', result);
+    }
 
     return {
       ...result,
       ...dragon
     };
   }));
-
-  return generatedUpdate(
-    needToGenerate,
-    firebaseKEY,
-    dragonType
-  );
 }
 
-eggGenerator();
+dragonGenerator();
