@@ -1,39 +1,62 @@
 const bunyan = require('bunyan');
 
 const totalDragons = require('../eth/total-dragons');
-const getGensById = require('../eth/gens');
+const getDragons = require('../eth/dragons');
 
-const { setDragon } = require('../services/firebase');
+const { addDragons, getLastDragon } = require('../services/firebase');
 
 const log = bunyan.createLogger({ name: 'eth-sync' });
 
 async function synchronization() {
-  const maxErrors = 10;
+  const amountForSet = 30;
+
   const lastDragonId = await totalDragons();
-  let numberOfErrors = 0;
+  let [lastDragon] = await getLastDragon();
 
-  log.info('number of dragons:', lastDragonId);
-
-  for (let index = 1; index < lastDragonId; index++) {
-    try {
-      const dragon = await getGensById(index);
-
-      dragon.generated = false;
-
-      await setDragon(dragon);
-
-      log.info(`dragon ${dragon.id} has been synchronized.`);
-    } catch (err) {
-      log.error(`dragon ${index} has not been synchronized.`, err);
-
-      numberOfErrors++;
+  if (!lastDragon) {
+    lastDragon = {
+      id: 0
     }
+  }
 
-    if (numberOfErrors >= maxErrors) {
-      log.warn('limit reached %s', maxErrors);
+  const startIndex = Number(lastDragon.id) + 1;
+  const endIndex = Number(lastDragonId);
 
-      return null;
+  log.info(
+    'amount of dragons: ',
+    lastDragonId,
+    'last dragonID: ',
+    lastDragon.id
+  );
+
+  if (startIndex === endIndex) {
+    log.info('all dragons has synchronized!');
+
+    return null;
+  }
+
+  const dragonsForSync = [];
+
+  for (let index = startIndex; index < endIndex; index++) {
+    dragonsForSync.push(index);
+
+    if (dragonsForSync.length >= amountForSet) {
+      break;
     }
+  }
+
+  try {
+    const dragons = await getDragons(dragonsForSync);
+    const toFirebase = dragons.map((dragon) => ({
+      ...dragon,
+      generated: false
+    }));
+  
+    await addDragons(toFirebase);
+
+    log.info(`${dragonsForSync.length} dragons has been synchronized.`);
+  } catch (err) {
+    log.error(`dragon ${index} has not been synchronized.`, err);
   }
 };
 
