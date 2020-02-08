@@ -62,7 +62,7 @@ function setDragon(dragon, key = 'dragoneth') {
  *   }
  * ])
  */
-function addDragons(dragons, key = 'dragoneth') {
+function addDragons(dragons, key) {
   const collections = dragons.map((dragon) => {
     const data = firebaseDataParse(dragon);
 
@@ -82,7 +82,7 @@ function addDragons(dragons, key = 'dragoneth') {
  * @example
  * getLastDragon().then(/ do somthing /);
  */
-function getLastDragon(limit = 1, key = 'dragoneth') {
+function getLastDragon(key, limit = 1) {
   const dragonRef = db.collection(key);
 
   let lastDragon = dragonRef
@@ -96,8 +96,26 @@ function getLastDragon(limit = 1, key = 'dragoneth') {
     );
 }
 
+function getNonGenerated(key, limit = 1) {
+  const dragonRef = db.collection(key);
+  const query = dragonRef
+    .where('generated', '==', false)
+    .limit(limit)
+    .get()
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        return [];
+      }
+
+      return snapshot.docs.map((doc) => doc.data());
+    });
+
+  return query;
+}
+
 module.exports = {
   setDragon,
   getLastDragon,
-  addDragons
+  addDragons,
+  getNonGenerated
 };

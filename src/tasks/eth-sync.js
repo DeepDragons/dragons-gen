@@ -6,12 +6,13 @@ const getDragons = require('../eth/dragons');
 const { addDragons, getLastDragon } = require('../services/firebase');
 
 const log = bunyan.createLogger({ name: 'eth-sync' });
+const firebaseKEY = 'dragoneth';
 
 async function synchronization() {
   const amountForSet = 30;
 
   const lastDragonId = await totalDragons();
-  let [lastDragon] = await getLastDragon();
+  let [lastDragon] = await getLastDragon(firebaseKEY);
 
   if (!lastDragon) {
     lastDragon = {
@@ -52,7 +53,7 @@ async function synchronization() {
       generated: false
     }));
   
-    await addDragons(toFirebase);
+    await addDragons(toFirebase, firebaseKEY);
 
     log.info(`${dragonsForSync.length} dragons has been synchronized.`);
   } catch (err) {
