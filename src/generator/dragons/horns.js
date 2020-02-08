@@ -3,6 +3,10 @@ const colorScheme = require('../genes/main');
 const config = require('../config');
 
 const horns = (obj, id, scheme) => {
+    if (obj.gen_number === 0) {
+        return Promise.reject(`Skip gen number 0.`);
+    }
+
     let srcL = `${config.dragons}/${obj.type}/${obj.gen_number}mask_l.png`;
     let srcR = `${config.dragons}/${obj.type}/${obj.gen_number}mask_r.png`;
     let fragment = `${config.out}/dragons/${obj.type}_${id}`;
@@ -18,12 +22,15 @@ const horns = (obj, id, scheme) => {
         .colorize(colors.r, colors.g, colors.b)
         .toBuffer((err, buffer) => {
             if (err) {
-                return reject(err);
+                return reject({ err, obj });
             }
             gm(buffer)
             .composite(srcShadowL)
             .write(fragment + '_l.png', (err) => {
-                if (err) return reject(err);
+                if (err) return reject({
+                    err,
+                    obj
+                });
 
                 asynData.l = true;
                 

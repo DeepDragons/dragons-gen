@@ -27,7 +27,7 @@ async function dragonGenerator() {
   );
 
   return await Promise.all(needGenerate.map(async (dragon) => {
-    log.info('try generate eggID:', dragon.id);
+    log.info('try generate dragonID:', dragon.id);
     
     const instance = new GenDragon(dragon.genColor, dragon.id);
     const result = await instance.onGenerateFragments();

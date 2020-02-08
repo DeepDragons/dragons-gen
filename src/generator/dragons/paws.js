@@ -163,10 +163,6 @@ const removeFragment = (src) => {
 };
 
 const paws = (obj, id, scheme) => {
-
-    // TODO: non ditail. //
-    if (obj.gen_number > 0) obj.gen_number = 0;
-
     let fragment = `${config.out}/dragons/${obj.type}_${id}`;
 
     let srcShadowL = `${config.dragons}/${obj.type}/${obj.gen_number}shadow_l.png`;

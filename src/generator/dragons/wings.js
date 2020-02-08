@@ -25,8 +25,6 @@ const writeFragment = (MaskFragment, DetailFragment, finite, srcShadow) => {
 };
 
 const wings = (obj, id, scheme) => {
-    if (obj.gen_number > 4) obj.gen_number = 4;
-
     let mask = `${config.dragons}/${obj.type}/${obj.gen_number}mask.png`;
     let detail = `${config.dragons}/${obj.type}/${obj.gen_number}detail.png`;
     let MaskFragment = `${config.out}/dragons/${obj.type}_mask_${id}.png`;
