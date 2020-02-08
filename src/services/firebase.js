@@ -33,7 +33,7 @@ const db = initializeApp();
  *    generated: false
  * });
  */
-function setDragon(dragon, key = 'dragoneth') {
+function setDragon(dragon, key) {
   let data = firebaseDataParse(dragon);
 
   const setDoc = db
@@ -96,15 +96,21 @@ function getLastDragon(key, limit = 1) {
     );
 }
 
-function getNonGenerated(key, limit = 1) {
+/**
+ * Get dragons has't generated.
+ * @param {*} key Firebase key.
+ * @param {*} type egg or dragon etc...
+ * @param {*} limit responce.
+ */
+function getNonGenerated(key, type, limit = 1) {
   const dragonRef = db.collection(key);
   const query = dragonRef
-    .where('generated', '==', false)
+    .where(type, '==', false)
     .limit(limit)
     .get()
     .then((snapshot) => {
       if (snapshot.empty) {
-        return [];
+        return [];``
       }
 
       return snapshot.docs.map((doc) => doc.data());
@@ -113,9 +119,25 @@ function getNonGenerated(key, limit = 1) {
   return query;
 }
 
+function generatedUpdate(dragons, key, type) {
+  const collections = dragons.map((dragon) => {
+    const data = firebaseDataParse(dragon);
+
+    data[type] = true;
+
+    return db
+      .collection(key)
+      .doc(String(data.id))
+      .update(data);
+  });
+
+  return Promise.all(collections);
+}
+
 module.exports = {
   setDragon,
   getLastDragon,
   addDragons,
-  getNonGenerated
+  getNonGenerated,
+  generatedUpdate
 };

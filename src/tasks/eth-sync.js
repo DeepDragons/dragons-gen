@@ -52,7 +52,8 @@ async function synchronization() {
     const dragons = await getDragons(dragonsForSync);
     const toFirebase = dragons.map((dragon) => ({
       ...dragon,
-      generated: false
+      egg: false,
+      dragon: false
     }));
   
     await addDragons(toFirebase, firebaseKEY);
