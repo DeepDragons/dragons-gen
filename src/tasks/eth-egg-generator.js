@@ -9,7 +9,7 @@ const { getNonGenerated, generatedUpdate } = require('../services/firebase');
 const log = bunyan.createLogger({ name: 'eth-egg-generator' });
 const firebaseKEY = config.key;
 const dragonType = 'egg';
-const limit = 1;
+const limit = 5;
 
 async function eggGenerator() {
   log.info('run egg generator.');

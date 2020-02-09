@@ -13,5 +13,7 @@ module.exports = function(dataForParse) {
     data[requireKey] = dataForParse[requireKey]
   });
 
+  data.id = Number(data.id);
+
   return data;
 }
