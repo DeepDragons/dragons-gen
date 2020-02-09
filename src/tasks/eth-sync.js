@@ -22,8 +22,8 @@ async function synchronization() {
     }
   }
 
-  const startIndex = Number(lastDragon.id) + 1;
-  const endIndex = Number(lastDragonId);
+  const startIndex = Number(lastDragon.id);
+  const endIndex = Number(lastDragonId) + 1;
 
   log.info(
     'amount of dragons: ',
@@ -32,7 +32,7 @@ async function synchronization() {
     lastDragon.id
   );
 
-  if (startIndex === endIndex) {
+  if (Number(lastDragonId) === Number(lastDragon.id)) {
     log.info('all dragons has synchronized!');
 
     return null;
