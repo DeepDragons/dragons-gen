@@ -9,7 +9,7 @@ const { getNonGenerated, generatedUpdate } = require('../services/firebase');
 const log = bunyan.createLogger({ name: 'eth-dragon-generator' });
 const firebaseKEY = config.key;
 const dragonType = 'dragon';
-const limit = 4;
+const limit = 3;
 
 async function dragonGenerator() {
   log.info('run dragon generator.');
@@ -35,7 +35,7 @@ async function dragonGenerator() {
 
     log.info('dragonID:', dragon.id, 'has been generated.');
 
-    if (result.status !== 'done') {
+    if (!result || !result.status || result.status !== 'done') {
       await generatedUpdate(
         [dragon],
         firebaseKEY,
@@ -65,6 +65,8 @@ async function dragonGenerator() {
     };
   }));
 }
+
+dragonGenerator();
 
 setInterval(() => {
   log.info('Run schedule!');

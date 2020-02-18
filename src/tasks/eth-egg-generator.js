@@ -33,7 +33,7 @@ async function eggGenerator() {
     const instance = new GenEggs(dragon.genColor, dragon.id);
     const result = await instance.onGenerateFragments();
 
-    if (result.status !== 'done') {
+    if (!result || !result.status || result.status !== 'done') {
       await generatedUpdate(
         [dragon],
         firebaseKEY,
@@ -65,6 +65,8 @@ async function eggGenerator() {
     };
   }));
 }
+
+eggGenerator();
 
 setInterval(() => {
   log.info('Run schedule!');

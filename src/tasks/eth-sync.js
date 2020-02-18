@@ -64,6 +64,8 @@ async function synchronization() {
   }
 };
 
+synchronization();
+
 setInterval(() => {
   log.info('Run schedule!');
   synchronization();
