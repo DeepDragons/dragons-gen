@@ -7,7 +7,7 @@
 
 ### Blockchain env variables:
 * `PROVIDER` : Blockchain node URL.
-* `DRAGONETH` : Main contract address.
+* `DRAGONZIL` : Main contract address.
 * `PROXY` : Proxy contract address.
 
 ### [Cloudinary](https://cloudinary.com/) env variables:
@@ -17,6 +17,7 @@
 
 ### Others env variables:
 * `DATA_DIR` : Path for details dir.
+
 
 ### scripts.
 Install all dependencies.

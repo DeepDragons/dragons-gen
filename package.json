@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/lich666dead/dragons-gen#readme",
   "dependencies": {
+    "@zilliqa-js/zilliqa": "^1.0.0",
     "bunyan": "^1.8.12",
     "cloudinary": "^1.19.0",
     "custom-env": "^1.0.2",
