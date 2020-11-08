@@ -146,7 +146,7 @@ class GenDragon {
         }
       }).catch(err => {
         this.done = null;
-        log.warn('heads-skip:', err);
+        log.warn('heads-skip:', err, this.scheme.head, this.id);
         if (err) k++;
       }),
       paws(this.scheme.paws, this.id, this.scheme.color_scheme).then(data => {
