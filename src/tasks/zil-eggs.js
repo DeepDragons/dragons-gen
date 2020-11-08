@@ -68,7 +68,7 @@ async function eggGenerator() {
 
 eggGenerator();
 
-// setInterval(() => {
-//   log.info('Run schedule!');
-//   eggGenerator();
-// }, 60000);
+setInterval(() => {
+  log.info('Run schedule!');
+  eggGenerator();
+}, 60000);
