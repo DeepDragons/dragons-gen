@@ -21,7 +21,7 @@ const bunyan = require('bunyan');
 const config = require('../config/firebase');
 
 const totalDragons = require('../zil/total-supply');
-const getDragonGens = require('../zil/get-gens');
+const getDragons = require('../zil/get-dragons');
 
 const { addDragons, getLastDragon } = require('../services/firebase');
 
@@ -36,7 +36,7 @@ async function synchronization() {
 
   if (!lastDragon) {
     lastDragon = {
-      id: 0
+      id: 1
     }
   }
 
