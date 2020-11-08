@@ -5,11 +5,12 @@ const generatorConfig = require('../generator/config');
 
 cloudinary.config(config);
 
-function upload(id, stage) {
-  let name = `${generatorConfig.out}/${stage}_${id}.png`;
+function upload(id, stage, stageNumber) {
+  let type = stage + 's';
+  let name = `${generatorConfig.out}/${type}/${id}.png`;
 
   let params = {
-    public_id: `${stage}_${id}`, 
+    public_id: `${stageNumber}_${id}`, 
     crop: 'limit',
     width: 2000,
     height: 2000,

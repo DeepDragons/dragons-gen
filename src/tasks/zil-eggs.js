@@ -44,7 +44,7 @@ async function eggGenerator() {
       log.error('wrong generate dragon status:', result);
     } else {
       try {
-        await cloudinaryUpload(dragon.id, 0);
+        await cloudinaryUpload(dragon.id, dragonType, 0);
         log.info('eggID:', dragon.id, 'has been uploaded');
       } catch (err) {
         log.error('cloudinary fail upload img', err);
