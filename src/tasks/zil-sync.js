@@ -1,23 +1,5 @@
-// const getGens = require('../zil/get-gens');
-// const { gensToString, parseGens } = require('../zil/gen-parser');
-// const { GenEggs } = require('../generator');
-
-// async function main() {
-//   const dragonID = '1';
-//   const gens = await getGens(dragonID);
-//   const parsedGens = parseGens(gens);
-//   const validatedGens = gensToString(parsedGens);
-//   const instance = new GenEggs(validatedGens, dragonID);
-
-//   const result = await instance.onGenerateFragments();
-
-//   console.log(result);
-// }
-
-// main();
-
 const bunyan = require('bunyan');
-
+const BN = require('bn.js');
 const config = require('../config/firebase');
 
 const totalDragons = require('../zil/total-supply');
@@ -30,6 +12,7 @@ const firebaseKEY = config.key;
 
 async function synchronization() {
   const amountForSet = 30;
+  const _one = new BN(1);
 
   const lastDragonId = await totalDragons();
   let [lastDragon] = await getLastDragon(firebaseKEY);
@@ -40,8 +23,8 @@ async function synchronization() {
     }
   }
 
-  const startIndex = Number(lastDragon.id);
-  const endIndex = Number(lastDragonId) + 1;
+  const _startIndex = new BN(lastDragon.id);
+  const _endIndex = new BN(lastDragonId);
 
   log.info(
     'amount of dragons: ',
@@ -50,7 +33,7 @@ async function synchronization() {
     lastDragon.id
   );
 
-  if (Number(lastDragonId) === Number(lastDragon.id)) {
+  if (_startIndex.eq(_endIndex)) {
     log.info('all dragons has synchronized!');
 
     return null;
@@ -58,8 +41,8 @@ async function synchronization() {
 
   const dragonsForSync = [];
 
-  for (let index = startIndex; index < endIndex; index++) {
-    dragonsForSync.push(index);
+  for (let index = new BN(_startIndex); index.lte(_endIndex); index = index.add(_one)) {
+    dragonsForSync.push(String(index));
 
     if (dragonsForSync.length >= amountForSet) {
       break;
