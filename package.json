@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "sync:eth": "node src/tasks/eth-sync.js | ./node_modules/.bin/bunyan",
     "egg:eth": "node src/tasks/eth-egg-generator.js | ./node_modules/.bin/bunyan",
-    "dragon:eth": "node src/tasks/eth-dragon-generator.js | ./node_modules/.bin/bunyan"
+    "dragon:eth": "node src/tasks/eth-dragon-generator.js | ./node_modules/.bin/bunyan",
+    "sync:zil": "node src/tasks/zil-sync.js | ./node_modules/.bin/bunyan"
   },
   "repository": {
     "type": "git",

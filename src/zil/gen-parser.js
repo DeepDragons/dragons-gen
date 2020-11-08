@@ -75,7 +75,7 @@ function parseGens(gensStr) {
 }
 
 function gensToString(gensObj) {
-  return `${gensObj.colorScheme}-\
+  return `0-${gensObj.colorScheme}-\
 ${gensObj.aura}-\
 ${gensObj.colorAura}-\
 ${gensObj.wings}-\
