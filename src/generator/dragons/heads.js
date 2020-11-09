@@ -3,9 +3,9 @@ const colorScheme = require('../genes/main');
 const config = require('../config');
 
 const heads = (obj, id, scheme) => {
-    let src = `${config.dragons}/${obj.type}/${obj.gen_number + 1}mask.png`;
+    let src = `${config.dragons}/${obj.type}/${obj.gen_number}mask.png`;
     let fragment = `${config.out}/dragons/${obj.type}_${id}.png`;
-    let srcShadow = `${config.dragons}/${obj.type}/${obj.gen_number + 1}shadow.png`;
+    let srcShadow = `${config.dragons}/${obj.type}/${obj.gen_number}shadow.png`;
 
     let colors = colorScheme.getColorFromSchema(scheme, obj.gen_color);
 
@@ -16,6 +16,7 @@ const heads = (obj, id, scheme) => {
             if (err) {
                 return reject(err);
             }
+
             gm(buffer)
             .composite(srcShadow)
             .write(fragment, (err) => {
