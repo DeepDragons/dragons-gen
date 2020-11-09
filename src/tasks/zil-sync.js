@@ -11,7 +11,7 @@ const log = bunyan.createLogger({ name: 'zil-sync' });
 const firebaseKEY = config.key;
 
 async function synchronization() {
-  const amountForSet = 30;
+  const amountForSet = 20;
   const _one = new BN(1);
 
   const lastDragonId = await totalDragons();
@@ -56,12 +56,12 @@ async function synchronization() {
       egg: false,
       dragon: false
     }));
-  
+
     await addDragons(toFirebase, firebaseKEY);
 
     log.info(`${dragonsForSync.length} dragons has been synchronized.`);
   } catch (err) {
-    log.error(`dragon ${index} has not been synchronized.`, err);
+    log.error(`has not been synchronized.`, err);
   }
 };
 

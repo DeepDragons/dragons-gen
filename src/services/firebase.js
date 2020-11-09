@@ -64,12 +64,16 @@ function setDragon(dragon, key) {
  */
 function addDragons(dragons, key) {
   const collections = dragons.map((dragon) => {
-    const data = firebaseDataParse(dragon);
+    try {
+      const data = firebaseDataParse(dragon);
 
-    return db
-      .collection(key)
-      .doc(String(data.id))
-      .set(data);
+      return db
+        .collection(key)
+        .doc(String(data.id))
+        .set(data);
+    } catch (err) {
+      return Promise.reject('Parse Error', err, dragon);
+    }
   });
 
   return Promise.all(collections);
