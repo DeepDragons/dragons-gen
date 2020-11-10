@@ -4,7 +4,7 @@ const config = require('../config');
 const exec = require('child_process').exec;
 
 const writeFragment = (MaskFragment, DetailFragment, finite, srcShadow) => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         gm(MaskFragment)
         .composite(DetailFragment)
         .toBuffer((err, buffer) => {
