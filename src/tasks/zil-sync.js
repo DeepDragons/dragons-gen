@@ -24,7 +24,7 @@ async function synchronization() {
   }
 
   const _startIndex = new BN(lastDragon.id);
-  const _endIndex = new BN(lastDragonId);
+  let _endIndex = new BN(lastDragonId);
 
   log.info(
     'amount of dragons: ',
@@ -33,7 +33,7 @@ async function synchronization() {
     lastDragon.id
   );
 
-  if (_startIndex.eq(_endIndex)) {
+  if (_startIndex.gte(_endIndex)) {
     log.info('all dragons has synchronized!');
 
     return null;
@@ -41,7 +41,7 @@ async function synchronization() {
 
   const dragonsForSync = [];
 
-  for (let index = new BN(_startIndex); index.lte(_endIndex); index = index.add(_one)) {
+  for (let index = new BN(_startIndex); index.lt(_endIndex); index = index.add(_one)) {
     dragonsForSync.push(String(index));
 
     if (dragonsForSync.length >= amountForSet) {
