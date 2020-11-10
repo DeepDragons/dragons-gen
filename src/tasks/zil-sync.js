@@ -36,7 +36,7 @@ async function synchronization() {
   if (_startIndex.gte(_endIndex)) {
     log.info('all dragons has synchronized!');
 
-    return null;
+    // return null;
   }
 
   const dragonsForSync = [];
@@ -70,4 +70,4 @@ synchronization();
 setInterval(() => {
   log.info('Run schedule!');
   synchronization();
-}, 10000);
+}, 20000);
