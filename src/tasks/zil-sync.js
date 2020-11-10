@@ -41,7 +41,7 @@ async function synchronization() {
 
   const dragonsForSync = [];
 
-  for (let index = new BN(_startIndex); index.lt(_endIndex); index = index.add(_one)) {
+  for (let index = new BN(_startIndex); index.lte(_endIndex); index = index.add(_one)) {
     dragonsForSync.push(String(index));
 
     if (dragonsForSync.length >= amountForSet) {
