@@ -70,4 +70,4 @@ synchronization();
 setInterval(() => {
   log.info('Run schedule!');
   synchronization();
-}, 20000);
+}, 50000);
