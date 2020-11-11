@@ -11,7 +11,7 @@ const log = bunyan.createLogger({ name: 'zil-sync' });
 const firebaseKEY = config.key;
 
 async function synchronization() {
-  const amountForSet = 20;
+  const amountForSet = 30;
   const _one = new BN(1);
 
   const lastDragonId = await totalDragons();
@@ -70,4 +70,4 @@ synchronization();
 setInterval(() => {
   log.info('Run schedule!');
   synchronization();
-}, 100000);
+}, 50000);
