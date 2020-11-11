@@ -71,4 +71,4 @@ dragonGenerator();
 setInterval(() => {
   log.info('Run schedule!');
   dragonGenerator();
-}, 60000);
+}, 100000);

@@ -71,4 +71,4 @@ eggGenerator();
 setInterval(() => {
   log.info('Run schedule!');
   eggGenerator();
-}, 60000);
+}, 100000);
