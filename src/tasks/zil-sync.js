@@ -11,7 +11,7 @@ const log = bunyan.createLogger({ name: 'zil-sync' });
 const firebaseKEY = config.key;
 
 async function synchronization() {
-  const amountForSet = 30;
+  const amountForSet = 100;
   const _one = new BN(1);
 
   const lastDragonId = await totalDragons();
