@@ -9,7 +9,7 @@ const { getNonGenerated, generatedUpdate } = require('../services/firebase');
 const log = bunyan.createLogger({ name: 'zilliqa-dragon-generator' });
 const firebaseKEY = config.key;
 const dragonType = 'dragon';
-const limit = 10;
+const limit = 3;
 
 async function dragonGenerator() {
   log.info('run dragon generator.');
