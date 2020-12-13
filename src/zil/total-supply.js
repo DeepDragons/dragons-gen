@@ -7,7 +7,7 @@ const contract = process.env.DRAGONZIL;
 const zilliqa = new Zilliqa(provider);
 
 module.exports = async function() {
-  const field = 'count_supply';
+  const field = 'token_id_count';
 
   const { result } = await zilliqa
     .blockchain
