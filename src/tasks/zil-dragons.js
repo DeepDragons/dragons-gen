@@ -28,14 +28,34 @@ async function dragonGenerator() {
   );
 
   return await Promise.all(needGenerate.map(async (dragon) => {
-    log.info('try generate dragonID:', dragon.id);
-    
-    const instance = new GenDragon(dragon.genColor, dragon.id);
-    const result = await instance.onGenerateFragments();
+    try {
+      log.info('try generate dragonID:', dragon.id);
 
-    log.info('dragonID:', dragon.id, 'has been generated.');
+      const instance = new GenDragon(dragon.genColor, dragon.id);
+      const result = await instance.onGenerateFragments();
 
-    if (!result || !result.status || result.status !== 'done') {
+      log.info('dragonID:', dragon.id, 'has been generated.');
+
+      if (!result || !result.status || result.status !== 'done') {
+        await generatedUpdate(
+          [dragon],
+          firebaseKEY,
+          dragonType,
+          false
+        );
+
+        log.error('wrong generate dragon status:', result);
+      } else {
+        await cloudinaryUpload(dragon.id, dragonType, 1);
+        log.info('dragonID:', dragon.id, 'has been uploaded');
+      }
+
+      return {
+        ...result,
+        ...dragon
+      };
+    } catch (err) {
+      log.error('cloudinary fail upload img', err);
       await generatedUpdate(
         [dragon],
         firebaseKEY,
@@ -43,26 +63,8 @@ async function dragonGenerator() {
         false
       );
 
-      log.error('wrong generate dragon status:', result);
-    } else {
-      try {
-        await cloudinaryUpload(dragon.id, dragonType, 1);
-        log.info('dragonID:', dragon.id, 'has been uploaded');
-      } catch (err) {
-        log.error('cloudinary fail upload img', err);
-        await generatedUpdate(
-          [dragon],
-          firebaseKEY,
-          dragonType,
-          false
-        );
-      }
+      return null;
     }
-
-    return {
-      ...result,
-      ...dragon
-    };
   }));
 }
 
