@@ -4,7 +4,7 @@
   "description": "Egg and dragon generator for dragoneth game.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node src/generator/index.js | ./node_modules/.bin/bunyan",
     "sync:eth": "node src/tasks/eth-sync.js | ./node_modules/.bin/bunyan",
     "egg:eth": "node src/tasks/eth-egg-generator.js | ./node_modules/.bin/bunyan",
     "dragon:eth": "node src/tasks/eth-dragon-generator.js | ./node_modules/.bin/bunyan",

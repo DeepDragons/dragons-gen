@@ -32,7 +32,7 @@ module.exports = {
 // 23 claws color
 // 24 eyes
 // 25 eyes color
-// let gens = '0-12-4-4-2-33-3-3-0-1-321-213-6-100-14-45-5-22-1-55-204-67-5-9-3-76-55-13-1-2-6-3';
+// let gens = '0-12-4-4-2-33-3-4-0-1-321-213-6-100-0-0-1-22-1-55-204-0-5-9-3-76-55-13-1-2-6-3';
 // let genDragon = new GenDragon(gens, 104);
 
 // genDragon.onGenerateFragments();
