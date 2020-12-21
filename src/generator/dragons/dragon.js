@@ -12,6 +12,21 @@ const dragon = (back, front) => {
         buferOrStr = back;
     }
 
+    // if (front && String(front).includes('spots')) {
+    //     return new Promise((resolve, reject) => {
+    //         gm(buferOrStr)
+    //         .mask(srcFront)
+    //         .toBuffer((err, buffer) => {
+    //             if (err) return reject(err);
+    
+    //             if (!err) return resolve({
+    //                 status: 'done',
+    //                 out: buffer
+    //             });
+    //         });
+    //     });
+    // }
+
     return new Promise((resolve, reject) => {
         gm(buferOrStr)
         .composite(srcFront)

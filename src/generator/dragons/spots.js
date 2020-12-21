@@ -4,7 +4,6 @@ const config = require('../config');
 
 const spots = (obj, id, scheme) => {
     return Promise.reject('Spots was desabled');
-
     let src = `${config.dragons}/${obj.type}/${obj.gen_number}mask.png`;
     let fragment = `${config.out}/dragons/${obj.type}_${id}.png`;
 

@@ -19,7 +19,6 @@ const dragon = require('./dragon');
   
 const log = bunyan.createLogger({ name: 'dragon-generator' });
 
-
 class GenDragon {
   constructor(gens, id) {
     this.scheme = colorScheme.scheme(gens);
@@ -104,14 +103,14 @@ class GenDragon {
     let orderWings  = 1;
     let orderPawsR  = 2;
     let orderBodies = 3;
-    let orderSpots  = 4;
+    let orderTails  = 4;
     let orderScales = 5;
-    let orderTails  = 6;
-    let orderPawsL  = 7;
-    let orderHornsR = 8;
-    let orderHeads  = 9;
-    let orderHornsL = 10;
-    let orderEyes   = 11;
+    let orderPawsL  = 6;
+    let orderHornsR = 7;
+    let orderHeads  = 8;
+    let orderHornsL = 9;
+    let orderEyes   = 10;
+    let orderSpots  = 11;
 
     return Promise.all([
       aura(this.scheme.aura, this.id, this.scheme.color_scheme).then(data => {
@@ -161,6 +160,17 @@ class GenDragon {
         log.warn('paws-skip:', err);
         if (err) k++;
       }),
+      spots(this.scheme.spots, this.id, this.scheme.color_scheme).then(data => {
+        log.info('spots-generated');
+        k++;
+        this.data[orderSpots] = data.out;
+        if (k >= kMax) {
+          return this.onGenerateAnDragon();
+        }
+      }).catch(err => {
+        log.warn('spots-skip:', err);
+        if (err) k++;
+      }),
       bodies(this.scheme.bodies, this.id, this.scheme.color_scheme).then(data => {
         log.info('bodies-generated');
         k++;
@@ -194,17 +204,6 @@ class GenDragon {
         }
       }).catch(err => {
         log.warn('scales-skip:', err);
-        if (err) k++;
-      }),
-      spots(this.scheme.spots, this.id, this.scheme.color_scheme).then(data => {
-        log.info('spots-generated');
-        k++;
-        this.data[orderSpots] = data.out;
-        if (k >= kMax) {
-          return this.onGenerateAnDragon();
-        }
-      }).catch(err => {
-        log.warn('spots-skip:', err);
         if (err) k++;
       }),
       wings(this.scheme.wings, this.id, this.scheme.color_scheme).then(data => {
