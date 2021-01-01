@@ -22,6 +22,9 @@ const writeFragment = (MaskFragment, DetailFragment, finite, srcShadow) => {
 };
 
 const tails = (obj, id, scheme) => {
+    if (obj.gen_number > 7) {
+        obj.gen_number = 7;
+    }
     let mask = `${config.eggs}/${obj.type}/${obj.gen_number}mask.png`;
     let detail = `${config.eggs}/${obj.type}/${obj.gen_number}detail.png`;
     let MaskFragment = `${config.out}/eggs/${obj.type}_mask_${id}.png`;
