@@ -3,8 +3,8 @@ const colorScheme = require('../genes/main');
 const config = require('../config');
 
 const aura = (obj, id, scheme) => {
-    if (obj.gen_number > 4) {
-        obj.gen_number = 0;
+    if (obj.gen_number > 5) {
+        obj.gen_number = 5;
     }
 
     let src = `${config.eggs}/${obj.type}/${obj.gen_number}mask.png`;

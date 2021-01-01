@@ -7,6 +7,10 @@ const aura = (obj, id, scheme) => {
         return Promise.reject(`Skip ${obj.gen_number} gen.`);
     }
 
+    if (obj.gen_number > 5) {
+        obj.gen_number = 5;
+    }
+
     let src = `${config.dragons}/${obj.type}/${obj.gen_number}mask.png`;
     let fragment = `${config.out}/dragons/${obj.type}_${id}.png`;
 
