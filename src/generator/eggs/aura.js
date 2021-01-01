@@ -3,8 +3,8 @@ const colorScheme = require('../genes/main');
 const config = require('../config');
 
 const aura = (obj, id, scheme) => {
-    if (obj.gen_number > 5) {
-        obj.gen_number = 5;
+    if (obj.gen_number > 4) {
+        return Promise.reject('skip 5 aura of eggs');
     }
 
     let src = `${config.eggs}/${obj.type}/${obj.gen_number}mask.png`;
