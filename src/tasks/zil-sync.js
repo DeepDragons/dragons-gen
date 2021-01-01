@@ -36,15 +36,12 @@ async function synchronization() {
   if (_startIndex.gte(_endIndex)) {
     log.info('all dragons has synchronized!');
 
-    // return null;
+    return null;
   }
 
   const dragonsForSync = [];
 
-  console.log(Number(_startIndex), Number(_endIndex));
-
-
-  for (let index = new BN(_startIndex); index.lt(_endIndex); index = index.add(_one)) {
+  for (let index = new BN(_startIndex); index.lte(_endIndex); index = index.add(_one)) {
     dragonsForSync.push(String(index));
 
     if (dragonsForSync.length >= amountForSet) {
