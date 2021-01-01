@@ -32,8 +32,8 @@ module.exports = {
 // 23 claws color
 // 24 eyes
 // 25 eyes color
-let gens = '0-33-7-33-2-33-3-3-5-1-2-43-3-22-1-1-1-22-1-10-255-0-5-9-3-76-255-255-1-2-6-3';
-let genDragon = new GenDragon(gens, 104);
+// let gens = '0-33-7-33-2-33-3-3-5-1-2-43-3-22-1-1-1-22-1-10-255-0-5-9-3-76-255-255-1-2-6-3';
+// let genDragon = new GenDragon(gens, 104);
 
-genDragon.onGenerateFragments();
+// genDragon.onGenerateFragments();
 // need fixed tails no working details.
