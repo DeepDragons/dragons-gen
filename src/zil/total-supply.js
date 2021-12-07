@@ -12,6 +12,5 @@ module.exports = async function() {
   const { result } = await zilliqa
     .blockchain
     .getSmartContractSubState(contract, field);
-
   return result[field];
 }
