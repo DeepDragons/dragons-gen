@@ -109,3 +109,5 @@ module.exports = {
   parseGens,
   gensToString
 };
+
+console.log(parseGens('77752714081405340346251105132'));

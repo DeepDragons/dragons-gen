@@ -79,9 +79,9 @@ var scheme = (gens) => {
             type: 'heads'
         },
         paws: {
-            gen_number: +this.gens[21],
-            gen_color: +this.gens[11],
-            chunk_color: +this.gens[23], // Claws.
+            gen_number: Number(this.gens[21]) || 0,
+            gen_color: Number(this.gens[11]),
+            chunk_color: Number(this.gens[23]), // Claws.
             type: 'paws'
         },
         eyes: {
