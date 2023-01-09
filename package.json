@@ -23,7 +23,7 @@
     "bunyan": "^1.8.12",
     "cloudinary": "^1.19.0",
     "custom-env": "^1.0.2",
-    "firebase-admin": "^8.9.2",
+    "firebase-admin": "^11.4.1",
     "gm": "^1.23.1",
     "web3": "^1.2.6"
   }
